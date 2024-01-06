@@ -1,4 +1,4 @@
-import { Ship } from './ship'
+import { Ship } from './ship';
 /* eslint-disable import/prefer-default-export */
 export class Gameboard {
   // should be a 2d array
@@ -22,9 +22,8 @@ export class Gameboard {
     // Case 2: Check if coord is a ship and record hit
     if (this.board[x][y] !== 0) {
       this.board[x][y].hit();
-    }
-    else {
-      this.missed.push(`[${x},${y}]`)
+    } else {
+      this.missed.push(`[${x},${y}]`);
     }
     this.fired.push(`[${x},${y}]`);
   }
@@ -35,13 +34,14 @@ export class Gameboard {
     for (let i = 0; i < 10; i++) {
       for (let j = 0; j < 10; j++) {
         if (this.board[i][j] !== 0) {
-          sum = this.board[i][j].length + sum;
+          sum = this.board[i][j].hits + sum;
         }
       }
     }
-    console.log(sum)
     if (sum === 20) {
       return true;
     }
+
+    return false;
   }
 }
