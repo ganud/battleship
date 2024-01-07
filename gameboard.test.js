@@ -12,7 +12,7 @@ test('Gameboard recognizes already fired tile', () => {
   const gameboard = new Gameboard();
   gameboard.board[9][9] = new Ship(5);
   gameboard.receiveAttack(9, 9);
-  expect(gameboard.receiveAttack(9, 9)).toBe(undefined);
+  expect(gameboard.receiveAttack(9, 9)).toBe(null);
 });
 
 test('Gameboard records a missed shot', () => {

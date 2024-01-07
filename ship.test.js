@@ -1,6 +1,5 @@
 import { Ship } from './ship';
 
-
 test('Hit', () => {
   const Carrier = new Ship(5);
   Carrier.hit();

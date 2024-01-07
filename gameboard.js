@@ -17,7 +17,7 @@ export class Gameboard {
   receiveAttack(x, y) {
     // Case 1: Check if coord already shot
     if (this.fired.includes(`[${x},${y}]`)) {
-      return;
+      return null;
     }
     // Case 2: Check if coord is a ship and record hit
     if (this.board[x][y] !== 0) {
