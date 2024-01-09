@@ -44,4 +44,17 @@ export class Gameboard {
 
     return false;
   }
+
+  renderBoard(gameboard) {
+    for (let i = 0; i < 10; i++)  {
+      let line = document.createElement('div');
+      line.classList.add('line');
+      for (let j = 0; j < 10; j++) {
+        let square = document.createElement('div');
+        square.classList.add('square');
+        line.appendChild(square);
+      }
+      gameboard.appendChild(line);
+    }
+  }
 }
