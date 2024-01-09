@@ -29,13 +29,13 @@
     grid-area: body;
     display: flex;
     justify-content: center;
-    gap: 20px;
-    height:300px
+    gap: 10vh;
+    height:300px;
 }
 
 .player-gameboard, .enemy-gameboard {
     display: flex;
-    background-color: black;
+    background-color: rgb(171, 171, 171);
     height: 600px;
     width: 600px;
 }
@@ -43,9 +43,13 @@
 .square {
     aspect-ratio: 1 / 1;
     background-color: rgb(240, 237, 235);
-    // border: solid black 1px;
+    border: solid black 1px;
 }
 
 .line {
     flex-grow: 1;
+}
+
+.hit {
+    background-color: red;
 }
