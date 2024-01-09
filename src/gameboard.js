@@ -45,28 +45,42 @@ export class Gameboard {
     return false;
   }
 
-  renderBoard(gameboard) {
-    const board = this; // The class board object instantiated to use its methods on
-    gameboard.innerHTML = '';
-    for (let i = 0; i < 10; i++) {
-      const line = document.createElement('div');
-      line.classList.add('line');
-      for (let j = 0; j < 10; j++) {
-        const square = document.createElement('div');
-        square.classList.add('square');
-        // If tile already attacked render it red
-        if (this.fired.includes(`[${i},${j}]`)) {
-          square.classList.add('hit');
-        }
-        // Adjust tile behaviour here
-        square.setAttribute('value', `[${i},${j}]`);
-        square.addEventListener('click', () => {
-          board.receiveAttack(i, j);
-          board.renderBoard(gameboard);
-        });
-        line.appendChild(square);
-      }
-      gameboard.appendChild(line);
+  // renderBoard(gameboard) {
+  //   const board = this; // The class board object instantiated to use its methods on
+  //   gameboard.innerHTML = '';
+  //   for (let i = 0; i < 10; i++) {
+  //     const line = document.createElement('div');
+  //     line.classList.add('line');
+  //     for (let j = 0; j < 10; j++) {
+  //       const square = document.createElement('div');
+  //       square.classList.add('square');
+  //       // If tile already attacked render it red
+  //       if (this.fired.includes(`[${i},${j}]`)) {
+  //         square.classList.add('hit');
+  //       }
+  //       if (this.isShip(i, j)) {
+  //         square.classList.add('ship');
+  //       }
+  //       // Adjust tile behaviour here
+  //       square.setAttribute('value', `[${i},${j}]`);
+  //       square.addEventListener('click', () => {
+  //         board.receiveAttack(i, j);
+  //         board.renderBoard(gameboard);
+  //       });
+  //       line.appendChild(square);
+  //     }
+  //     gameboard.appendChild(line);
+  //   }
+  // }
+
+  placeShip(x, y, ship) {
+    this.board[x][y] = ship;
+  }
+
+  isShip(x, y) {
+    if (this.board[x][y] !== 0) {
+      return true;
     }
+    return false;
   }
 }

@@ -1,11 +1,18 @@
 import './style.css';
 import { Player } from './player'
 import { Gameboard } from './gameboard';
+import { renderBoard } from './dom';
 
 const enemyBoard = document.getElementsByClassName('enemy-gameboard')[0];
 const enemyGameboard = new Gameboard();
-enemyGameboard.renderBoard(enemyBoard);
+renderBoard(enemyBoard, enemyGameboard);
 
 const playerBoard = document.getElementsByClassName('player-gameboard')[0];
 const playerGameboard = new Gameboard();
-playerGameboard.renderBoard(playerBoard);
+renderBoard(playerBoard, playerGameboard);
+
+const player = new Player(enemyGameboard);
+const enemy = new Player(playerGameboard);
+
+
+// Game loop
