@@ -9,8 +9,11 @@ function getRandomInt(max) {
 export class Player {
   enemyGameboard = null;
 
-  constructor(enemyGameboard) {
+  enemyDOM = null;
+
+  constructor(enemyGameboard, enemyDOM) {
     this.enemyGameboard = enemyGameboard;
+    this.enemyDOM = enemyDOM;
   }
 
   attack(x, y) {

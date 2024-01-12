@@ -3,7 +3,7 @@ import { Player } from './player';
 import { Gameboard } from './gameboard';
 import { Ship } from './ship';
 
-export function renderBoard(boardDom, boardObject) {
+export function renderBoard(boardDom, boardObject, isPlayer=true) {
   boardDom.innerHTML = '';
   for (let i = 0; i < 10; i++) {
     const line = document.createElement('div');
@@ -18,12 +18,15 @@ export function renderBoard(boardDom, boardObject) {
       if (boardObject.isShip(i, j)) {
         square.classList.add('ship');
       }
-      // Adjust tile behaviour here
       square.setAttribute('value', `[${i},${j}]`);
-      square.addEventListener('click', () => {
-        boardObject.receiveAttack(i, j);
-        renderBoard(boardDom, boardObject);
-      });
+      // Only allow enemy tiles to be clicked on
+      if (!isPlayer) {
+        // Adjust tile behaviour here
+        square.addEventListener('click', () => {
+          boardObject.receiveAttack(i, j);
+          renderBoard(boardDom, boardObject, isPlayer);
+        });
+      }
       line.appendChild(square);
     }
     boardDom.appendChild(line);
