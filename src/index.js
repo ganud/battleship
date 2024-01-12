@@ -2,6 +2,7 @@ import './style.css';
 import { Player } from './player'
 import { Gameboard } from './gameboard';
 import { renderBoard } from './dom';
+import { Ship } from './ship';
 
 const enemyBoard = document.getElementsByClassName('enemy-gameboard')[0];
 const enemyGameboard = new Gameboard();
