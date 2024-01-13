@@ -17,7 +17,9 @@ export class Player {
   }
 
   attack(x, y) {
-    this.enemyGameboard.receiveAttack(x, y);
+    if (this.enemyGameboard.receiveAttack(x, y) === null) {
+      return 'already hit';
+    }
   }
 
   randomMove() {

@@ -33,8 +33,9 @@ export function renderBoard(player, isPlayer=false) {
 };
 
 export function advanceTurn(player, enemy, x, y) {
-  player.attack(x,y);
-  enemy.randomMove();
+  if (player.attack(x, y) !== 'already hit') {
+    enemy.randomMove();
+  }
   renderBoard(player, false);
   renderBoard(enemy, true);
 }
