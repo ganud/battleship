@@ -12,6 +12,7 @@ const playerGameboard = new Gameboard();
 
 const player = new Player(enemyGameboard, enemyBoard);
 const enemy = new Player(playerGameboard, playerBoard);
+
 renderBoard(player, false);
 renderBoard(enemy, true);
 
