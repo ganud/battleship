@@ -3,7 +3,7 @@ import { Player } from './player';
 import { Gameboard } from './gameboard';
 import { Ship } from './ship';
 
-export function renderBoard(player, isPlayer = false) {
+export function renderBoard(player, isPlayer = false, gameOver = false) {
   player.enemyDOM.innerHTML = '';
   for (let i = 0; i < 10; i++) {
     const line = document.createElement('div');
@@ -24,8 +24,8 @@ export function renderBoard(player, isPlayer = false) {
         square.classList.add('ship');
       }
       square.setAttribute('value', `[${i},${j}]`);
-      // Only allow enemy tiles to be clicked on
-      if (!isPlayer) {
+      // Disallow clicking on enemyboard or when game is ended
+      if (!isPlayer && !gameOver) {
         // Adjust tile behaviour here
         square.addEventListener('click', () => {
           advanceTurn(humanplayer, enemyplayer, i, j);
@@ -42,7 +42,9 @@ export function advanceTurn(player, enemy, x, y) {
     enemy.randomMove();
   }
   if (player.enemyGameboard.checkSunk() || enemy.enemyGameboard.checkSunk()) {
-    console.log('winner')
+    renderBoard(player, false, true);
+    renderBoard(enemy, true, true);
+    return;
   }
   renderBoard(player, false);
   renderBoard(enemy, true);

@@ -3,7 +3,7 @@
     margin: 0px;
 }
 .site-container {
-    background-color: rgb(80, 80, 80);
+    background-color: rgb(183, 183, 183);
     height: 100vh;
     display: grid;
     grid-template-areas: 
@@ -14,9 +14,9 @@
 }
 
 .header {
-    color:rgb(220, 220, 220);
+    color:rgb(75, 75, 75);
     font-family: 'Courier New', Courier, monospace;
-    font-size: 4rem;
+    font-size: 5rem;
     margin-top: 20x;
     padding: 20px;
     display: flex;
@@ -38,12 +38,13 @@
     background-color: rgb(171, 171, 171);
     height: 600px;
     width: 600px;
+    border: 1px solid black;
 }
 
 .square {
     aspect-ratio: 1 / 1;
     background-color: rgb(240, 237, 235);
-    border: solid black 3px;
+    border: solid black 2px;
 }
 
 .line {
@@ -51,10 +52,10 @@
 }
 
 .ship {
-    border: solid green 3px;
+    border: solid rgb(36, 251, 36) 2px;
     background-color: gray;
 }
 
 .hit {
-    background-color: red;
+    background-color: rgb(136, 75, 75);
 }
