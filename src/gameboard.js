@@ -1,3 +1,4 @@
+import { forEach, uniq } from 'lodash';
 import { Ship } from './ship';
 /* eslint-disable import/prefer-default-export */
 export class Gameboard {
@@ -31,13 +32,16 @@ export class Gameboard {
   checkSunk() {
     // Should record total hits needed to down an entire board (20)
     let sum = 0;
+    const ships = [];
     for (let i = 0; i < 10; i++) {
       for (let j = 0; j < 10; j++) {
         if (this.board[i][j] !== 0) {
-          sum = this.board[i][j].hits + sum;
+          ships.push(this.board[i][j]);
         }
       }
     }
+    const uniqueShips = uniq(ships);
+    uniqueShips.forEach((ship) => sum += ship.hits);
     if (sum === 20) {
       return true;
     }
@@ -46,6 +50,7 @@ export class Gameboard {
   }
 
   placeShip(x, y, ship) {
+    // Out of bounds or a ship
     if (x < 0 || x > 9 || y < 0 || y > 9 || this.board[x][y] !== 0) {
       return null;
     }

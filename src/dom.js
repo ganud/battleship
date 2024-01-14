@@ -15,7 +15,12 @@ export function renderBoard(player, isPlayer = false) {
       if (player.enemyGameboard.fired.includes(`[${i},${j}]`)) {
         square.classList.add('hit');
       }
-      if (player.enemyGameboard.isShip(i, j)) {
+      // Render ships for players only
+      if (player.enemyGameboard.isShip(i, j) && isPlayer === true) {
+        square.classList.add('ship');
+      }
+      // Render ships for enemies IF hit
+      if (player.enemyGameboard.isShip(i, j) && square.classList.contains('hit')) {
         square.classList.add('ship');
       }
       square.setAttribute('value', `[${i},${j}]`);
@@ -35,6 +40,9 @@ export function renderBoard(player, isPlayer = false) {
 export function advanceTurn(player, enemy, x, y) {
   if (player.attack(x, y) !== 'already hit') {
     enemy.randomMove();
+  }
+  if (player.enemyGameboard.checkSunk() || enemy.enemyGameboard.checkSunk()) {
+    console.log('winner')
   }
   renderBoard(player, false);
   renderBoard(enemy, true);
@@ -72,6 +80,7 @@ export function placeShipOfLength(player, ship, x, y, mode = 'horizontal') {
     });
   }
 }
+
 const enemyBoard = document.getElementsByClassName('enemy-gameboard')[0];
 const enemyGameboard = new Gameboard();
 
@@ -80,4 +89,8 @@ const playerGameboard = new Gameboard();
 
 const humanplayer = new Player(enemyGameboard, enemyBoard);
 const enemyplayer = new Player(playerGameboard, playerBoard);
-placeShipOfLength(enemyplayer, new Ship(5), 0, 5, 'vertical');
+
+placeShipOfLength(humanplayer, new Ship(5), 0, 5, 'vertical');
+placeShipOfLength(humanplayer, new Ship(5), 1, 5, 'vertical');
+placeShipOfLength(humanplayer, new Ship(6), 2, 4, 'vertical');
+placeShipOfLength(humanplayer, new Ship(4), 3, 5, 'vertical');
