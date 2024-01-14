@@ -55,6 +55,14 @@ export function placeShipOfLength(player, ship, x, y, mode = 'horizontal') {
       }
     }
   }
+  else if (mode === 'vertical')  {
+    for (let i = 0; i < ship.length; i++) {
+      if (player.enemyGameboard.placeShip(x, y + i, ship) !== null) {
+        successCount++;
+        placed.push(`[${x},${y + i}]`);
+      }
+    }
+  }
   // Reverse gameboard changes if unsuccessful
   if (successCount !== ship.length) {
     placed.forEach((coord) => {
@@ -72,4 +80,4 @@ const playerGameboard = new Gameboard();
 
 const humanplayer = new Player(enemyGameboard, enemyBoard);
 const enemyplayer = new Player(playerGameboard, playerBoard);
-placeShipOfLength(enemyplayer, new Ship(2), 8, 0);
+placeShipOfLength(enemyplayer, new Ship(5), 0, 5, 'vertical');
