@@ -2,7 +2,7 @@
 // Take enemy gameboard
 import { Gameboard } from './gameboard';
 
-function getRandomInt(max) {
+export function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
 // A player receives the gameboard of the enemy to attack

@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import { Player } from './player';
+import { Player, getRandomInt } from './player';
 import { Gameboard } from './gameboard';
 import { Ship } from './ship';
 
@@ -64,8 +64,7 @@ export function placeShipOfLength(player, ship, x, y, mode = 'horizontal') {
         placed.push(`[${i + x},${y}]`);
       }
     }
-  }
-  else if (mode === 'vertical')  {
+  } else if (mode === 'vertical') {
     for (let i = 0; i < ship.length; i++) {
       if (player.enemyGameboard.placeShip(x, y + i, ship) !== null) {
         successCount++;
@@ -80,9 +79,25 @@ export function placeShipOfLength(player, ship, x, y, mode = 'horizontal') {
       const ycoord = coord.charAt(3);
       player.enemyGameboard.board[xcoord][ycoord] = 0;
     });
+    return null;
   }
 }
 
+export function placeRandomShips(player) {
+  const shipLengths = [5, 4, 3, 3, 2, 2, 1];
+  shipLengths.forEach((length) => {
+    const ship = new Ship(length);
+    // choose random coords
+
+    while (true) {
+      const x = getRandomInt(10);
+      const y = getRandomInt(10);
+      if (placeShipOfLength(player, ship, x, y, 'horizontal') !== null) {
+        break;
+      }
+    }
+  });
+}
 const enemyBoard = document.getElementsByClassName('enemy-gameboard')[0];
 const enemyGameboard = new Gameboard();
 
@@ -92,7 +107,4 @@ const playerGameboard = new Gameboard();
 const humanplayer = new Player(enemyGameboard, enemyBoard);
 const enemyplayer = new Player(playerGameboard, playerBoard);
 
-placeShipOfLength(humanplayer, new Ship(5), 0, 5, 'vertical');
-placeShipOfLength(humanplayer, new Ship(5), 1, 5, 'vertical');
-placeShipOfLength(humanplayer, new Ship(6), 2, 4, 'vertical');
-placeShipOfLength(humanplayer, new Ship(4), 3, 5, 'vertical');
+placeRandomShips(enemyplayer);
