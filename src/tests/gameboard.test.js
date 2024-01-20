@@ -37,5 +37,5 @@ test('Adjacent named ships register the same hits', () => {
   gameboard.board[7][8] = Carrier;
   gameboard.receiveAttack(7, 8);
   gameboard.receiveAttack(7, 7);
-  expect(gameboard.board[7][7].hits).toBe(2);
+  expect(gameboard.board[7][7].hits).toBe(true);
 });

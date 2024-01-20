@@ -2,6 +2,7 @@
 import { Player, getRandomInt } from './player';
 import { Gameboard } from './gameboard';
 import { Ship } from './ship';
+import { hasAdjacentShip } from './array';
 
 export function renderBoard(player, isPlayer = false, gameOver = false) {
   player.enemyDOM.innerHTML = '';
@@ -50,6 +51,7 @@ export function advanceTurn(player, enemy, x, y) {
   renderBoard(enemy, true);
 }
 
+// Returns null if unsuccessful
 export function placeShipOfLength(player, ship, x, y, mode = 'horizontal') {
 // Limit all placements to a row or column, and they MUST be adjacent
 // If the condition can't be met, undo the placement
@@ -58,13 +60,25 @@ export function placeShipOfLength(player, ship, x, y, mode = 'horizontal') {
   let successCount = 0;
   const placed = [];
   if (mode === 'horizontal') {
+    // Check if there are any adjacent ships beforehand
     for (let i = 0; i < ship.length; i++) {
+      if (hasAdjacentShip(player.enemyGameboard.board, i + x, y) === true) {
+        return null;
+      }
+    }
+    for (let i = 0; i < ship.length; i++) {
+      // Only push valid ship placements
       if (player.enemyGameboard.placeShip(i + x, y, ship) !== null) {
         successCount++;
         placed.push(`[${i + x},${y}]`);
       }
     }
   } else if (mode === 'vertical') {
+    for (let i = 0; i < ship.length; i++) {
+      if (hasAdjacentShip(player.enemyGameboard.board, x, y + i) === true) {
+        return null;
+      }
+    }
     for (let i = 0; i < ship.length; i++) {
       if (player.enemyGameboard.placeShip(x, y + i, ship) !== null) {
         successCount++;
@@ -92,12 +106,20 @@ export function placeRandomShips(player) {
     while (true) {
       const x = getRandomInt(10);
       const y = getRandomInt(10);
-      if (placeShipOfLength(player, ship, x, y, 'horizontal') !== null) {
+      let mode = '';
+      if (getRandomInt(2) === 1) {
+        mode = 'vertical';
+      }
+      else {
+        mode = 'horizontal';
+      }
+      if (placeShipOfLength(player, ship, x, y, mode) !== null) {
         break;
       }
     }
   });
 }
+
 const enemyBoard = document.getElementsByClassName('enemy-gameboard')[0];
 const enemyGameboard = new Gameboard();
 
@@ -107,4 +129,7 @@ const playerGameboard = new Gameboard();
 const humanplayer = new Player(enemyGameboard, enemyBoard);
 const enemyplayer = new Player(playerGameboard, playerBoard);
 
-placeRandomShips(enemyplayer);
+// placeShipOfLength(enemyplayer, new Ship(5), 1, 0, 'horizontal')
+
+// placeShipOfLength(enemyplayer, new Ship(5), 1, 1, 'horizontal')
+placeRandomShips(enemyplayer)
