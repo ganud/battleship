@@ -1,3 +1,4 @@
+/* eslint-disable no-loop-func */
 /* eslint-disable import/prefer-default-export */
 import { Player, getRandomInt } from './player';
 import { Gameboard } from './gameboard';
@@ -53,10 +54,6 @@ export function advanceTurn(player, enemy, x, y) {
 
 // Returns null if unsuccessful
 export function placeShipOfLength(player, ship, x, y, mode = 'horizontal') {
-// Limit all placements to a row or column, and they MUST be adjacent
-// If the condition can't be met, undo the placement
-// Placeship will check out of bounds, or if a ship is on that tile
-// Perhaps also check adjacent tiles?
   let successCount = 0;
   const placed = [];
   if (mode === 'horizontal') {
@@ -109,8 +106,7 @@ export function placeRandomShips(player) {
       let mode = '';
       if (getRandomInt(2) === 1) {
         mode = 'vertical';
-      }
-      else {
+      } else {
         mode = 'horizontal';
       }
       if (placeShipOfLength(player, ship, x, y, mode) !== null) {
@@ -119,6 +115,43 @@ export function placeRandomShips(player) {
     }
   });
 }
+
+// Variant of renderboard for the player
+export function selectrenderBoard(player, shipLengthsindex=0) {
+  const shipLengths = [5, 4, 3, 3, 2, 2, 1];
+  player.enemyDOM.innerHTML = '';
+  for (let i = 0; i < 10; i++) {
+    const line = document.createElement('div');
+    line.classList.add('line');
+    for (let j = 0; j < 10; j++) {
+      const square = document.createElement('div');
+      square.classList.add('square');
+      // Render ships for players only
+      if (player.enemyGameboard.isShip(i, j)) {
+        square.classList.add('ship');
+      }
+      square.setAttribute('value', `[${i},${j}]`);
+      // Adjust tile behaviour here
+      square.addEventListener('click', () => {
+        if (placeShipOfLength(player, new Ship(shipLengths[shipLengthsindex]), i, j, 'horizontal') !== null) {
+          shipLengthsindex++;
+          // Start the game once all ships are placed
+          if (shipLengthsindex >= shipLengths.length) {
+            renderBoard(enemyplayer, false)
+            renderBoard(humanplayer, false)
+          }
+          selectrenderBoard(player, shipLengthsindex);
+        }
+      });
+      line.appendChild(square);
+    }
+    player.enemyDOM.appendChild(line);
+  }
+}
+// How to let player place their ships
+// Array of ship lengths cycled through...
+// A special gameboard that allows a limited number of clicks equal to the ships left
+
 
 const enemyBoard = document.getElementsByClassName('enemy-gameboard')[0];
 const enemyGameboard = new Gameboard();
@@ -129,7 +162,6 @@ const playerGameboard = new Gameboard();
 const humanplayer = new Player(enemyGameboard, enemyBoard);
 const enemyplayer = new Player(playerGameboard, playerBoard);
 
-// placeShipOfLength(enemyplayer, new Ship(5), 1, 0, 'horizontal')
+placeRandomShips(humanplayer);
 
-// placeShipOfLength(enemyplayer, new Ship(5), 1, 1, 'horizontal')
-placeRandomShips(enemyplayer)
+selectrenderBoard(enemyplayer);

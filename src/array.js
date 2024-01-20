@@ -37,6 +37,7 @@ export function hasAdjacentShip(board, x, y) {
       nonShip++;
     }
   });
+  // This means there is at least one ship on the surrounding tiles
   if (nonShip !== adjacentCoords.length) {
     return true;
   }
