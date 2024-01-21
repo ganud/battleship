@@ -20,6 +20,7 @@
   align-items: center;
   justify-content: center;
   grid-area: header;
+  position: relative;
 }
 
 .gameboards {
@@ -55,4 +56,10 @@
 
 .hit {
   background-color: rgb(136, 75, 75);
+}
+
+.helpText {
+  position: absolute;
+  bottom: 50px;
+  font-size: 2rem;
 }/*# sourceMappingURL=style.css.map */

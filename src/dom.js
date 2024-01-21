@@ -117,7 +117,7 @@ export function placeRandomShips(player) {
 }
 
 // Variant of renderboard for the player
-export function selectrenderBoard(player, shipLengthsindex=0) {
+export function selectrenderBoard(player, shipLengthsindex = 0) {
   const shipLengths = [5, 4, 3, 3, 2, 2, 1];
   player.enemyDOM.innerHTML = '';
   for (let i = 0; i < 10; i++) {
@@ -133,12 +133,12 @@ export function selectrenderBoard(player, shipLengthsindex=0) {
       square.setAttribute('value', `[${i},${j}]`);
       // Adjust tile behaviour here
       square.addEventListener('click', () => {
-        if (placeShipOfLength(player, new Ship(shipLengths[shipLengthsindex]), i, j, 'horizontal') !== null) {
+        if (placeShipOfLength(player, new Ship(shipLengths[shipLengthsindex]), i, j, playerOrientation) !== null) {
           shipLengthsindex++;
           // Start the game once all ships are placed
           if (shipLengthsindex >= shipLengths.length) {
-            renderBoard(enemyplayer, false)
-            renderBoard(humanplayer, false)
+            renderBoard(enemyplayer, false);
+            renderBoard(humanplayer, false);
           }
           selectrenderBoard(player, shipLengthsindex);
         }
@@ -148,10 +148,18 @@ export function selectrenderBoard(player, shipLengthsindex=0) {
     player.enemyDOM.appendChild(line);
   }
 }
-// How to let player place their ships
-// Array of ship lengths cycled through...
-// A special gameboard that allows a limited number of clicks equal to the ships left
 
+let playerOrientation = 'horizontal';
+window.addEventListener('keydown', (event) => {
+  // Adjust placement direction on q press
+  if (event.key === 'q') {
+    if (playerOrientation === 'horizontal') {
+      playerOrientation = 'vertical';
+    } else {
+      playerOrientation = 'horizontal';
+    }
+  }
+});
 
 const enemyBoard = document.getElementsByClassName('enemy-gameboard')[0];
 const enemyGameboard = new Gameboard();
