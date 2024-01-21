@@ -1,5 +1,5 @@
-import { Gameboard } from './gameboard';
-import { Ship } from './ship';
+import { Gameboard } from '../gameboard';
+import { Ship } from '../ship';
 
 test('Gameboard registers hit', () => {
   const gameboard = new Gameboard();

@@ -1,6 +1,6 @@
-import { Gameboard } from './gameboard';
-import { Ship } from './ship';
-import { Player } from './player';
+import { Gameboard } from '../gameboard';
+import { Ship } from '../ship';
+import { Player } from '../player';
 
 test('Fires at a random coord', () => {
   const gameboard = new Gameboard();
