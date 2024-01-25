@@ -21,6 +21,10 @@ export function renderBoard(player, isPlayer = false, gameOver = false) {
       if (player.enemyGameboard.isShip(i, j) && isPlayer === true) {
         square.classList.add('ship');
       }
+      // Player has its own tile hover color
+      if (isPlayer === true) {
+        square.classList.add('player-square');
+      }
       // Render ships for enemies IF hit
       if (player.enemyGameboard.isShip(i, j) && square.classList.contains('hit')) {
         square.classList.add('ship');
@@ -125,7 +129,7 @@ export function selectrenderBoard(player, shipLengthsindex = 0) {
     line.classList.add('line');
     for (let j = 0; j < 10; j++) {
       const square = document.createElement('div');
-      square.classList.add('square');
+      square.classList.add('player-square');
       // Render ships for players only
       if (player.enemyGameboard.isShip(i, j)) {
         square.classList.add('ship');

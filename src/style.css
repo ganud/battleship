@@ -39,10 +39,22 @@
   border: 1px solid black;
 }
 
-.square {
+.square, .player-square {
   aspect-ratio: 1/1;
   background-color: rgb(240, 237, 235);
   border: solid black 2px;
+  transition-property: background-color;
+  transition-duration: 0.25s;
+  transition-timing-function: ease-out;
+  transition-delay: 0s;
+}
+
+.square:hover {
+  background-color: rgb(218, 36, 36);
+}
+
+.player-square:hover {
+  background-color: rgb(21, 131, 131);
 }
 
 .line {
